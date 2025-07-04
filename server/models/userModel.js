@@ -2,36 +2,36 @@ const mongoose = require("mongoose")
 
 const userSchema = new mongoose.Schema(
     {
-        name : {
-            type:String , 
-            required : true, 
-            trim : true 
-        } , 
-        lastname : {
-            type:String , 
-            required : true, 
-            trim : true 
-        } , 
-        email : {
-            type:String , 
-            required : true, 
-            unique : true ,
-            trim : true 
-        } ,
-        password : {
-            type:String , 
-            required : true , 
-        } , 
-        registrationDate : {
+        name: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        lastname: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        registrationDate: {
             type: Date,
             default: Date.now
-        } ,
-        lastLogin : {
+        },
+        lastLogin: {
             type: Date,
             default: null
-        } , 
-       startOfDay: {
-            type: String, 
+        },
+        startOfDay: {
+            type: String,
             default: "08:00"
         },
         endOfDay: {
@@ -39,26 +39,34 @@ const userSchema = new mongoose.Schema(
             default: "20:00"
         },
 
-        currentStreak : {
+        currentStreak: {
             type: Number,
             default: 0
-        } ,
-        longestStreak : {
+        },
+        longestStreak: {
             type: Number,
             default: 0
-        } ,
-        bestScore : {
+        },
+        bestScore: {
             type: Number,
-            default: 0 , 
-            date : Date 
-        } ,
-        lvl : {
+            default: 0,
+            date: Date
+        },
+        lvl: {
             type: Number,
             default: 1
-        } ,
+        },
+        currentXp: {
+            type: Number,
+            default: 0
+        },
+        nextLvlXp: {
+            type: Number,
+            default: 100
+        },
     }
 )
 
-const userModel = mongoose.model('user' , userSchema)
+const userModel = mongoose.model('user', userSchema)
 
 module.exports = userModel
