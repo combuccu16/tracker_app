@@ -21,7 +21,33 @@ const goalSetSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-
+    tasksCount : {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    totalImportance: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    tasks: [{
+        taskId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'task',
+            required: true
+        },
+        requiredHours: {
+            type: Number,
+            required: true,
+            min: 0
+        },
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
+    }],
 
 })
 

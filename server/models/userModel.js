@@ -64,6 +64,10 @@ const userSchema = new mongoose.Schema(
             type: Number,
             default: 100
         },
+        coins : {
+            type: Number,
+            default: 0
+        },
     }
 )
 

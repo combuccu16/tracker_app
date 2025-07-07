@@ -37,6 +37,16 @@ const taskSchema = new mongoose.Schema({
             default: 0,
             min: 0
         },
+        subTasksCount: {
+            type: Number,
+            default: 0,
+            min: 0
+        },
+        finishedSubtasksCount: {
+            type: Number,
+            default: 0,
+            min: 0
+        },
 
     }
 )

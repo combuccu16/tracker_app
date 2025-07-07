@@ -1,5 +1,5 @@
 const Task = require('../models/taskModel');
-const { getLatestGoalSet } = require('../helpers/goalSetHelper');
+const GoalSet = require('../models/goalSetModel');
 async function getTasks(req, res) {
     try {
         const tasks = await Task.find({ userId: req.session.userId });
@@ -10,13 +10,10 @@ async function getTasks(req, res) {
 }
 async function getCurrentTasks(req, res) {
     try {
-        const latestGoalSet = await getLatestGoalSet(req, res);
-        if (!latestGoalSet) {
-            return res.status(404).json({ msg: 'No active goal set found' });
-        }
 
+        const { goalSetId } = req.body;
         const currentTasks = await Task.find({
-            goalSetId: latestGoalSet._id,
+            goalSetId: goalSetId
         });
 
         res.status(200).json(currentTasks);
@@ -33,10 +30,10 @@ async function addTask(req, res) {
     }
 
     try {
-        const latestGoalSet = await getLatestGoalSet(req, res);
+        const latestGoalSet = await GoalSet.findById(goalSetId);
         const newTask = new Task({
             userId: req.session.userId,
-            goalSetId: latestGoalSet._id,
+            goalSetId: goalSetId,
             title,
             requiredHours,
             importance,
@@ -44,8 +41,22 @@ async function addTask(req, res) {
         });
 
         await newTask.save();
+        latestGoalSet.tasks.push({
+            taskId: newTask._id,
+            requiredHours: requiredHours,
+            title: title
+        });
+        latestGoalSet.tasksCount += 1;
+        latestGoalSet.totalImportance += importance;
+        await latestGoalSet.save();
         res.status(201).json(newTask);
     } catch (error) {
         res.status(500).json({ msg: 'Error creating task', error: error.message });
     }
 }
+
+module.exports = {
+    getTasks,
+    getCurrentTasks,
+    addTask
+};

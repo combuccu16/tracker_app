@@ -1,5 +1,6 @@
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
+const { initOnLogin } = require("../helpers/initiUserHistory")
 async function checkUser(req , res){
     const {email , password} = req.body 
     const user = await User.findOne({email})
@@ -11,7 +12,11 @@ async function checkUser(req , res){
         return res.status(401).json({msg : "wrong credentials"})
     }
     const safeUser = {id : user._id , name : user.name , lastname : user.lastname}
-    return res.statis(200).json({msg : "authentificated successfully" , user : safeUser})
+    req.session.userId = user._id
+    req.session.userName = user.name
+    req.session.userLastname = user.lastname
+    await initOnLogin(user._id)
+    return res.status(200).json({msg : "authentificated successfully" , user : safeUser})
 }
 
 async function addUser(req , res){

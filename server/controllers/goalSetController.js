@@ -1,5 +1,6 @@
 const goalSet = require('../models/goalSetModel');
 const { getLatestGoalSet } = require('../helpers/goalSetHelper');
+const { initOnGoalCreate } = require('../helpers/initiUserHistory');
 async function getGoalSets(req, res) {
     try {
         const userId = req.session.userId;
@@ -43,6 +44,7 @@ async function addGoalSet(req, res) {
             });
 
             await newGoalSet.save();
+            initOnGoalCreate(req.session.userId, newGoalSet);
             res.status(201).json(newGoalSet);
         }else{
             res.status(400).json({ msg: 'Active goal set already exists' });
