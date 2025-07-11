@@ -1,4 +1,4 @@
-const History = require("../models/historyModel");
+const History = require("../models/history");
 const GoalSet = require("../models/goalSetModel");
 const subTaskModel = require("../models/subTaskModel");
 async function initOnLogin(userId) {

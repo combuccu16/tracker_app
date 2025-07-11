@@ -68,6 +68,36 @@ const userSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
+        equippedAnimation: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'animation',
+            default: null
+        },
+        equippedIdiom: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'idiom',
+            default: null
+        },
+        equippedCharacter: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'character',
+            default: null
+        },
+        purchasedAnimations: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'animation',
+            default: []
+        }],
+        purchasedIdioms: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'idiom',
+            default: []
+        }],
+        purchasedCharacters: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'character',
+            default: []
+        }],
     }
 )
 

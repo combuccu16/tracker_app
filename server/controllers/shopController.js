@@ -2,7 +2,7 @@ const Animation = require('../models/animationModel');
 const Idiom = require('../models/idiomsModel');
 const User = require('../models/userModel');
 async function buy(req , res){
-    const {userId} = req.body;
+    const userId = req.session.userId
     const {itemId , type} = req.query;
     try {   
         if(type === "animation"){
@@ -39,7 +39,7 @@ async function buy(req , res){
 }
 
 async function getOwnedItems(req, res) {
-    const { userId } = req.body;
+    const userId = req.session.userId;
     const {type} = req.query;
     try {
         const user = await User.findById(userId).populate('ownedAnimations ownedIdioms');

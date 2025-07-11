@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const animationSchema = new mongoose.Schema({
+const idiomSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -18,4 +18,4 @@ const animationSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Animation', animationSchema);
+module.exports = mongoose.model('Idiom', idiomSchema);
